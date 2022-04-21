@@ -138,6 +138,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   slowPercent: 0.5
   speed: 5
+  rotationSpeed: 100
 --- !u!54 &3254421452305196980
 Rigidbody:
   m_ObjectHideFlags: 0
