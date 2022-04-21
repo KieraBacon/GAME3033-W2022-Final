@@ -6,7 +6,8 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerCharacter), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    private PlayerCharacter playerCharacter;
+    [SerializeField] private PlayerCharacter playerCharacter;
+    [SerializeField] private Interactor interactor;
     private PlayerInput playerInput;
     private InputAction moveAction;
     private InputAction interactAction;
@@ -44,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnInteract(InputAction.CallbackContext obj)
     {
-        playerCharacter.Interact();
+        interactor.Interact();
     }
 
     private void OnSlow(InputAction.CallbackContext obj)

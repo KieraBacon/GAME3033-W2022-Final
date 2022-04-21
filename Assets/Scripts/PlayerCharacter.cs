@@ -11,11 +11,10 @@ public class PlayerCharacter : MonoBehaviour
     [SerializeField, Min(0)]
     private float speed = 1;
 
-    [Header("Glowbugs")]
-    private bool isCarryingGlowbug = false;
+    [Header("Interaction")]
     private Vector2 moveInput = Vector2.zero;
 
-    [Header("Referenced Components")]
+    [Header("Component References")]
     private Rigidbody rigidbody;
 
     private void Awake()
@@ -31,20 +30,6 @@ public class PlayerCharacter : MonoBehaviour
     public void Move(Vector2 moveInput)
     {
         this.moveInput = moveInput;
-    }
-
-    public void Interact()
-    {
-        if (isCarryingGlowbug) // Drop what you have
-        {
-            isCarryingGlowbug = false;
-        }
-        else // Pick up a new one
-        {
-            isCarryingGlowbug = true;
-        }
-
-        Debug.Log("isCarryingGlowbug: " + isCarryingGlowbug);
     }
 
     public void Slow(bool value)
