@@ -4,9 +4,13 @@ using UnityEngine;
 
 public class Glowbug : MonoBehaviour
 {
-    static Glowbug lastGlowbugToFlash;
+    //static Glowbug lastGlowbugToFlash;
+    static HashSet<Glowbug> allGlowbugs = new HashSet<Glowbug>();
 
     [Header("Component References")]
+    [SerializeField]
+    private GlowbugRangeFinder _rangeFinder;
+    public GlowbugRangeFinder rangeFinder => _rangeFinder;
     [SerializeField]
     private LineRenderer lineRenderer;
     [SerializeField]
@@ -27,29 +31,29 @@ public class Glowbug : MonoBehaviour
     [SerializeField, Min(0)]
     private float lineRendererDisplayTime = 0.1f;
     [SerializeField]
-    private Color lineRendererColorMin;
-    [SerializeField]
-    private Color lineRendererColorMax;
-    [SerializeField]
-    private int lineRendererStepsToMax;
+    private Gradient lineRendererStepsGradient;
+    private int lineRendererStepsToMax => allGlowbugs.Count;
     [SerializeField]
     private float animationFlashDelayPercentage = 0.25f;
 
     [Header("Internal Flash Properties")]
     private float flashFrequency;
     private float initialFlashDelay;
-    private float lastFlashTime;
-    private Color lineStartColor => Lerp(lineRendererColorMin, lineRendererColorMax, (float)chainIndex / lineRendererStepsToMax);
-    private Color lineEndColor => Lerp(lineRendererColorMin, lineRendererColorMax, (float)(chainIndex + 1) / lineRendererStepsToMax);
+    private float _lastFlashTime;
+    public float lastFlashTime => _lastFlashTime;
+    private Color lineStartColor => lineRendererStepsGradient.Evaluate((float)connectionChainIndex / lineRendererStepsToMax);
+    private Color lineEndColor => lineRendererStepsGradient.Evaluate((float)(connectionChainIndex + 1)/ lineRendererStepsToMax);
 
     [Header("Connection Properties")]
     private Glowbug connectedGlowbug;
     private float connectedFlashTime = -1;
     private float connectionAngle = 0;
-    private int chainIndex = 0;
+    private int connectionChainIndex = 0;
+    [SerializeField, Min(0)]
+    private int minChainedConnectionsToProgress = 2;
 
-    private bool withinConnectionTime => connectedFlashTime > 0 && lastFlashTime - connectedFlashTime < maxConnectionTime;
-    private bool withinLineRendererTime => Time.time < lastFlashTime + lineRendererDisplayTime;
+    private bool withinConnectionTime => connectedFlashTime > 0 && _lastFlashTime - connectedFlashTime < maxConnectionTime;
+    private bool withinLineRendererTime => Time.time < _lastFlashTime + lineRendererDisplayTime;
     private bool shouldShowLineRenderer =>
         TimeManager.slowPercent >= 0.5f &&
         withinConnectionTime &&
@@ -60,11 +64,15 @@ public class Glowbug : MonoBehaviour
     private void OnEnable()
     {
         TimeManager.onTimeAdjusted += OnTimeAdjusted;
+        allGlowbugs.Add(this);
     }
+
+
 
     private void OnDisable()
     {
         TimeManager.onTimeAdjusted -= OnTimeAdjusted;
+        allGlowbugs.Remove(this);
     }
 
     private void Update()
@@ -75,7 +83,7 @@ public class Glowbug : MonoBehaviour
         {
             if (lineRendererDisplayTime > 0)
             {
-                float t = (Time.time - lastFlashTime) / lineRendererDisplayTime;
+                float t = (Time.time - _lastFlashTime) / lineRendererDisplayTime;
                 t -= animationFlashDelayPercentage;
                 if (t < 0)
                     t *= -1;
@@ -94,7 +102,7 @@ public class Glowbug : MonoBehaviour
             lineRenderer.enabled = false;
         }
 
-        if (Time.time > lastFlashTime + flashFrequency)
+        if (Time.time > _lastFlashTime + flashFrequency)
         {
             Flash();
         }
@@ -104,68 +112,89 @@ public class Glowbug : MonoBehaviour
     {
         flashFrequency = flashFrequencyMin + Random.Range(0, flashFrequencyVariance);
         initialFlashDelay = Random.Range(0, initialFlashDelayVariance);
-        lastFlashTime = Time.time + initialFlashDelay;
+        _lastFlashTime = Time.time + initialFlashDelay;
         initialized = true;
     }
 
     private void Flash()
     {
-        lastFlashTime = Time.time;
+        _lastFlashTime = Time.time;
         animator.SetTrigger(FlashAnimationTriggerHash);
+
+        Glowbug lastGlowbugToFlash = GetLastGlowbugToFlashInRange();
+
+        // If another Glowbug has flashed previously to this one
         if (lastGlowbugToFlash)
         {
-            float timeSinceLastFlash = lastFlashTime - lastGlowbugToFlash.lastFlashTime;
-            float connectedAngle = 0;
-            float angleDifference = 0;
+            float timeSinceLastFlash = _lastFlashTime - lastGlowbugToFlash._lastFlashTime; // The amount of time since the last flash
+            float connectedAngle = Vector3.SignedAngle(Vector3.forward, lastGlowbugToFlash.transform.position - transform.position, Vector3.up); // The signed angle, from Vector3.forward, between this Glowbug and the last one
+            float angleDifference = 0; // The absolute difference in angle between this Glowbug's connection to the last one, and the last one's connection to the one before it
 
-            if (lastGlowbugToFlash.connectedGlowbug)
+            if (lastGlowbugToFlash.connectionChainIndex > 0) // If the last Glowbug was in a chain with at least one other - IE, it has a meaningful connectionAngle
             {
-                connectedAngle = Vector3.SignedAngle(Vector3.forward, lastGlowbugToFlash.gameObject.transform.position - transform.position, Vector3.up);
-                if (lastGlowbugToFlash.chainIndex > 0)
-                    angleDifference = Mathf.Abs(connectedAngle - lastGlowbugToFlash.connectionAngle);
+                angleDifference = Mathf.Abs(connectedAngle - lastGlowbugToFlash.connectionAngle);
             }
 
             if (angleDifference <= maxConnectionAngle && timeSinceLastFlash < maxConnectionTime) // There's a connection
             {
-
                 connectedGlowbug = lastGlowbugToFlash;
-                connectedFlashTime = lastGlowbugToFlash.lastFlashTime;
+                connectedFlashTime = lastGlowbugToFlash._lastFlashTime;
                 connectionAngle = connectedAngle;
-                chainIndex = lastGlowbugToFlash.chainIndex + 1;
+                
+                connectionChainIndex = lastGlowbugToFlash.connectionChainIndex + 1;
+
+                float chainImpact = (1 / (allGlowbugs.Count - 2)) * flashFrequency; // If all Glowbugs are in a chain, then time progresses by 1 second per second.
+                if (connectionChainIndex > 1)
+                    TimeManager.AdjustTime(chainImpact);
+
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(1, lastGlowbugToFlash.transform.position + Vector3.up * 0.1f);
                 lineRenderer.startColor = Color.clear;
                 lineRenderer.endColor = Color.clear;
-                //lineRenderer.startColor = Lerp(lineRendererColorMin, lineRendererColorMax, (float)chainIndex / lineRendererStepsToMax);
-                //lineRenderer.endColor = Lerp(lineRendererColorMin, lineRendererColorMax, (float)(chainIndex + 1) / lineRendererStepsToMax);
                 lineRenderer.enabled = shouldShowLineRenderer;
-
-                if (lastGlowbugToFlash.chainIndex == 0)
-                    Debug.Log(Time.time + " chainIndex: " + chainIndex);
             }
             else // There's no connection
             {
                 connectedGlowbug = null;
                 connectedFlashTime = -1;
                 connectionAngle = 0;
-                chainIndex = 0;
+                TimeManager.AdjustTime(-TimeManager.time);
+                connectionChainIndex = 0;
             }
         }
 
-        lastGlowbugToFlash = this;
-    }
+        //lastGlowbugToFlash = this;
 
-    private Color Lerp(Color a, Color b, float t)
-    {
-        return new Color(
-            Mathf.Lerp(a.r, b.r, t),
-            Mathf.Lerp(a.g, b.g, t),
-            Mathf.Lerp(a.b, b.b, t),
-            Mathf.Lerp(a.a, b.a, t));
+        string text = "";
+        foreach (Glowbug glowbug in FindObjectsOfType<Glowbug>())
+        {
+            text += " " + glowbug.name + ": " + glowbug.connectionChainIndex + "\n";
+        }
+        FindObjectOfType<TMPro.TextMeshProUGUI>().text = text;
     }
 
     private void OnTimeAdjusted()
     {
         lineRenderer.enabled = shouldShowLineRenderer;
+    }
+
+    private Glowbug GetLastGlowbugToFlashInRange()
+    {
+        Glowbug lastToFlash = null;
+        float lastTime = 0;
+
+        foreach (Glowbug glowbug in rangeFinder.glowbugsInRange)
+        {
+            if (glowbug == this) continue;
+
+            float time = glowbug._lastFlashTime;
+            if (!lastToFlash || time > lastTime)
+            {
+                lastToFlash = glowbug;
+                lastTime = time;
+            }
+        }
+
+        return lastToFlash;
     }
 }

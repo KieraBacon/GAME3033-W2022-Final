@@ -11,12 +11,13 @@ public class Interactor : MonoBehaviour
     public event InteractEventHandler onInteract;
 
     [Header("Interaction")]
+    [SerializeField]
+    private bool showInteractionHighlight = true;
     private HashSet<IInteractable> interactablesInRange = new HashSet<IInteractable>();
     private IInteractable currentInteractionTarget = null;
     private IInteractable persistentInteraction = null;
     [SerializeField, Range(0, 1), Tooltip("The degree to which the target algorithm prioritizes the interactor's facing over distance. If set to 1, the interactor will always select the interactable closest to the interator's forward position.")]
     private float interactionFacingBias = 0.5f;
-    private float maxDistance;
     private Collider collider;
 
     private void Awake()
@@ -106,7 +107,7 @@ public class Interactor : MonoBehaviour
         currentInteractionTarget = interactable;
         if (currentInteractionTarget != null)
         {
-            currentInteractionTarget.SetHighlight(true);
+            currentInteractionTarget.SetHighlight(showInteractionHighlight ? true : false);
         }
     }
 
@@ -118,5 +119,20 @@ public class Interactor : MonoBehaviour
         {
             SetCurrentInteractionTarget(null);
         }
+    }
+
+    public List<T> GetInteractablesOfType<T>()
+    {
+        List<T> list = new List<T>();
+        foreach (IInteractable interactable in interactablesInRange)
+        {
+            T t = interactable.gameObject.GetComponent<T>();
+            if (t != null)
+            {
+                list.Add(t);
+            }
+        }
+
+        return list;
     }
 }

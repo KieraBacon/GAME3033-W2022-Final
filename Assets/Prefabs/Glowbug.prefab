@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6891980629679992592}
   - component: {fileID: 1374430371196186717}
+  - component: {fileID: 6309562822020652859}
   - component: {fileID: 8179741062525779497}
   - component: {fileID: 1095256884446459896}
   - component: {fileID: 6355110045814711690}
@@ -32,6 +33,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 159479741042177688}
+  - {fileID: 2974852251168418637}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -46,8 +48,24 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.6
   m_Center: {x: 0, y: 0, z: 0.2}
+--- !u!54 &6309562822020652859
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654572885429055550}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 1
+  m_AngularDrag: 1.25
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 80
+  m_CollisionDetection: 0
 --- !u!114 &8179741062525779497
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -61,6 +79,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outline: {fileID: 4673968660826024391}
+  _rigidbody: {fileID: 6309562822020652859}
 --- !u!114 &1095256884446459896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,17 +92,46 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a0dfa2664dd21c54ba424d1d8b5c8794, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rangeFinder: {fileID: 1642143120103306325}
   lineRenderer: {fileID: 6355110045814711690}
   animator: {fileID: 3661839720842552053}
   flashFrequencyMin: 1
   flashFrequencyVariance: 0
   initialFlashDelayVariance: 5
-  maxConnectionAngle: 60
+  maxConnectionAngle: 45
   maxConnectionTime: 1
   lineRendererDisplayTime: 0.25
-  lineRendererColorMin: {r: 0.49803922, g: 0, b: 0, a: 0.24705882}
-  lineRendererColorMax: {r: 1, g: 0.7490196, b: 0, a: 1}
-  lineRendererStepsToMax: 10
+  lineRendererStepsGradient:
+    serializedVersion: 2
+    key0: {r: 0.49803922, g: 0, b: 0, a: 0.49803922}
+    key1: {r: 0.7490196, g: 0.37254903, b: 0, a: 1}
+    key2: {r: 1, g: 0.7490196, b: 0, a: 0}
+    key3: {r: 1, g: 0.8745098, b: 0.62352943, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 0
+    ctime1: 21627
+    ctime2: 43253
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  animationFlashDelayPercentage: 0.25
+  minChainedConnectionsToProgress: 2
 --- !u!120 &6355110045814711690
 LineRenderer:
   m_ObjectHideFlags: 0
@@ -182,6 +230,63 @@ LineRenderer:
     generateLightingData: 0
   m_UseWorldSpace: 1
   m_Loop: 0
+--- !u!1 &8115021844552003603
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2974852251168418637}
+  - component: {fileID: 7565154530951850194}
+  - component: {fileID: 1642143120103306325}
+  m_Layer: 7
+  m_Name: Range Finder
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2974852251168418637
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115021844552003603}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6891980629679992592}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!135 &7565154530951850194
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115021844552003603}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 10
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1642143120103306325
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8115021844552003603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8cf36d3d7110ad349b12b5bb40cfe621, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &413254227348803955
 PrefabInstance:
   m_ObjectHideFlags: 0

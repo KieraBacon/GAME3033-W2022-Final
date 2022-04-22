@@ -67,6 +67,8 @@ public class Carrier : MonoBehaviour
 
         carriedObject = carryable;
         carriedObject.PickUp(this);
+        carriedObject.rigidbody.isKinematic = !carriedObject.canInteract;
+        carriedObject.rigidbody.detectCollisions = false;
         carriedObjectParent = carriedObject.transform.parent;
         carriedObject.transform.SetParent(carryAttachmentPoint);
         carryOffset = carriedObject.transform.position - carryAttachmentPoint.position;
@@ -80,11 +82,14 @@ public class Carrier : MonoBehaviour
         if (carriedObject == null)
             return;
 
-        carriedObject.transform.SetParent(carriedObjectParent);
-        carriedObject.transform.position += new Vector3(0, carryOffset.y, 0);
         carriedObject.Drop();
+        carriedObject.rigidbody.isKinematic = !carriedObject.canInteract;
+        carriedObject.rigidbody.detectCollisions = true;
+        carriedObject.transform.SetParent(carriedObjectParent);
+        carriedObject.rigidbody.MovePosition(carriedObject.transform.position + new Vector3(0, carryOffset.y, 0));
+        //carriedObject.transform.position += new Vector3(0, carryOffset.y, 0);
         carriedObject = null;
-        
+
         interactor.SetPersistentInteraction(null);
     }
 }

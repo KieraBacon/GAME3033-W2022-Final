@@ -40,11 +40,11 @@ public class PlayerCharacter : MonoBehaviour
     {
         if (value)
         {
-            TimeManager.AdjustTime(gameObject, 1 - slowPercent);
+            TimeManager.AdjustTimeScale(gameObject, 1 - slowPercent);
         }
         else
         {
-            TimeManager.RestoreTime(gameObject);
+            TimeManager.RestoreTimeScale(gameObject);
         }
     }
 }

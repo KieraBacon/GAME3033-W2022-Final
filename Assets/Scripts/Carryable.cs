@@ -11,6 +11,9 @@ public class Carryable : MonoBehaviour, IInteractable
     private Carrier carrier;
     public bool isBeingCarried => carrier;
     public bool canInteract => !isBeingCarried;
+    [SerializeField]
+    private Rigidbody _rigidbody;
+    public Rigidbody rigidbody => _rigidbody;
 
     public bool Interact()
     {

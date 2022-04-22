@@ -13,13 +13,31 @@ public class TimeManager : MonoBehaviour
     public static bool Paused { get => isPaused; set { isPaused = value; SetTimeScale(); } }
     public static float slowPercent => 1 - Time.timeScale;
 
-    public static void AdjustTime(GameObject key, float value)
+    private static float _time;
+    public static float time => _time;
+
+    private void Start()
+    {
+        _time = 0;
+    }
+
+    private void Update()
+    {
+        _time += Time.deltaTime;
+    }
+
+    public static void AdjustTime(float delta)
+    {
+        _time += delta;
+    }
+
+    public static void AdjustTimeScale(GameObject key, float value)
     {
         timeEffects.Add(key, value);
         SetTimeScale();
     }
 
-    public static void RestoreTime(GameObject key)
+    public static void RestoreTimeScale(GameObject key)
     {
         timeEffects.Remove(key);
         SetTimeScale();

@@ -4,13 +4,21 @@ using UnityEngine;
 
 public class ClockHand : MonoBehaviour
 {
-    private float time;
+    [SerializeField]
+    private Animator animator;
+    private int WiggleAnimationTriggerHash = Animator.StringToHash("Wiggle");
+    private int timeLastUpdate;
 
     private void Update()
     {
-        time += Time.deltaTime;
-        time %= 60;
+        int time = (int)(TimeManager.time % 60);
 
-        transform.rotation = Quaternion.AngleAxis((int)time * 6, Vector3.up);
+        if (time != timeLastUpdate)
+        {
+            animator.SetTrigger(WiggleAnimationTriggerHash);
+            transform.rotation = Quaternion.AngleAxis(time * 6, Vector3.up);
+        }
+
+        timeLastUpdate = time;
     }
 }
