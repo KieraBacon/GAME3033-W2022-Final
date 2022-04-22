@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class SubmenuSwitcher : MonoBehaviour
@@ -16,25 +17,52 @@ public class SubmenuSwitcher : MonoBehaviour
     public int submenuIndex => index;
     public bool atLastIndex => index >= submenus?.Count - 1;
     public bool atFirstIndex => index <= 0;
+    public Submenu activeSubmenu
+    {
+        get
+        {
+            if (submenus == null || index < 0 || index > submenus.Count - 1)
+                return null;
+            return submenus[index];
+        }
+    }
+        
 
     protected virtual void Awake()
     {
         GetSubmenuChildren();
+        foreach (Submenu submenu in submenus)
+        {
+            submenu.onSubmenuFinishedClosing += OnSubmenuFinishedClosing;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        foreach (Submenu submenu in submenus)
+        {
+            submenu.onSubmenuFinishedClosing -= OnSubmenuFinishedClosing;
+        }
     }
 
     protected virtual void OnEnable()
     {
-        SwitchSubmenu(resetOnEnable ? 0 : index, null);
+        SwitchSubmenu(resetOnEnable || index < 0 ? 0 : index, null);
     }
 
-    protected virtual void OnDisable() { }
+    protected virtual void OnDisable()
+    {
+        
+    }
 
     private void GetSubmenuChildren()
     {
+
         submenus = new List<Submenu>();
         foreach (Transform child in transform)
         {
             Submenu submenu = child.GetComponent<Submenu>();
+            submenu.switcher = this;
             submenus.Add(submenu);
             submenu.Close(true);
         }
@@ -49,7 +77,8 @@ public class SubmenuSwitcher : MonoBehaviour
         index = Mathf.Clamp(index, 0, submenus.Count - 1);
         if (this.index == index && submenus[this.index].isOpen) return;
 
-        submenus[this.index].Close();
+        if (this.index >= 0)
+            submenus[this.index].Close();
         this.index = index;
         submenus[this.index].Open(overrideSelection);
 
@@ -74,5 +103,27 @@ public class SubmenuSwitcher : MonoBehaviour
     public void Previous()
     {
         SwitchSubmenu(index - 1);
+    }
+
+    private void OnSubmenuFinishedClosing(Submenu caller)
+    {
+        int openSubmenus = 0;
+        foreach (Submenu submenu in submenus)
+        {
+            if (submenu.isOpen)
+                ++openSubmenus;
+        }
+
+        if (openSubmenus <= 0)
+            gameObject.SetActive(false);
+    }
+
+    public void Close()
+    {
+        foreach (Submenu submenu in submenus)
+        {
+            submenu.Close();
+        }
+        index = -1;
     }
 }

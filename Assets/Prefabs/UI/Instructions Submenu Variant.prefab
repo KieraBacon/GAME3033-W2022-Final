@@ -682,6 +682,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 93827627837627036, guid: 1e2319c65dbb78e4bb27667fa18121df, type: 3}
+      propertyPath: preferredHeight
+      value: 550
+      objectReference: {fileID: 0}
     - target: {fileID: 1009031636463336610, guid: 1e2319c65dbb78e4bb27667fa18121df, type: 3}
       propertyPath: preferredHeight
       value: 500
@@ -696,7 +700,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5069409353381444046, guid: 1e2319c65dbb78e4bb27667fa18121df, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 500
+      value: 550
       objectReference: {fileID: 0}
     - target: {fileID: 5069409353881947113, guid: 1e2319c65dbb78e4bb27667fa18121df, type: 3}
       propertyPath: m_Name

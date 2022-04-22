@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour
     private InputAction moveAction;
     private InputAction interactAction;
     private InputAction slowAction;
+    private InputAction pauseAction;
+    public bool allowInput;
 
     private void Awake()
     {
@@ -23,6 +25,7 @@ public class PlayerController : MonoBehaviour
         moveAction = playerInput.actions.FindAction("Move");
         interactAction = playerInput.actions.FindAction("Interact");
         slowAction = playerInput.actions.FindAction("Slow");
+        pauseAction = playerInput.actions.FindAction("Pause");
     }
 
     private void OnEnable()
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
         interactAction.performed += OnInteract;
         slowAction.performed += OnSlow;
         slowAction.canceled += OnSlow;
+        pauseAction.performed += OnPause;
     }
 
     private void OnDisable()
@@ -41,31 +45,40 @@ public class PlayerController : MonoBehaviour
         interactAction.performed -= OnInteract;
         slowAction.performed -= OnSlow;
         slowAction.canceled -= OnSlow;
+        pauseAction.performed -= OnPause;
     }
 
     private void OnMove(InputAction.CallbackContext obj)
     {
-        _playerCharacter.Move(obj.ReadValue<Vector2>());
+        if (allowInput)
+            _playerCharacter.Move(obj.ReadValue<Vector2>());
     }
 
     private void OnInteract(InputAction.CallbackContext obj)
     {
-        interactor.Interact();
+        if (allowInput)
+            interactor.Interact();
     }
 
     private void OnSlow(InputAction.CallbackContext obj)
     {
-        _playerCharacter.Slow(obj.performed);
+        if (allowInput)
+            _playerCharacter.Slow(obj.performed);
+    }
+
+    private void OnPause(InputAction.CallbackContext obj)
+    {
+        GameManager.PauseGame();
     }
 
     public void StartGame()
     {
-        playerInput.SwitchCurrentActionMap("Player");
+        allowInput = true;
         _playerCharacter.StartGame();
     }
 
     public void EndGame()
     {
-        playerInput.SwitchCurrentActionMap("None");
+        allowInput = false;
     }
 }

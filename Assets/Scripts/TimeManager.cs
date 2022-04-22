@@ -11,6 +11,8 @@ public class TimeManager
 
     private static bool isPaused = false;
     public static bool Paused { get => isPaused; set { isPaused = value; SetTimeScale(); } }
+
+    public static bool shallowPaused = false;
     public static float slowPercent => 1 - Time.timeScale;
 
     private static float _time;
@@ -18,12 +20,14 @@ public class TimeManager
 
     public static void AdjustTime(float delta)
     {
-        _time += delta;
+        if (!shallowPaused)
+            _time += delta;
     }
 
     public static void ResetTime()
     {
-        _time = 0;
+        if (!shallowPaused)
+            _time = 0;
     }
 
     public static void AdjustTimeScale(GameObject key, float value)

@@ -107,7 +107,7 @@ MonoBehaviour:
   m_ActionEvents: []
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Player
+  m_DefaultActionMap: e25eabf5-7a32-470e-abd6-8e78713cf61d
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!114 &3254421452305196987
@@ -124,6 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _playerCharacter: {fileID: 0}
   interactor: {fileID: 8261068130273018398}
+  allowInput: 0
 --- !u!114 &3254421452305196983
 MonoBehaviour:
   m_ObjectHideFlags: 0
