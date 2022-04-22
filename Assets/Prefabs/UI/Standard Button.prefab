@@ -192,7 +192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.7490196, b: 0, a: 0.7490196}
+  m_Color: {r: 1, g: 0.7529412, b: 0, a: 0.7529412}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -222,6 +222,7 @@ GameObject:
   - component: {fileID: 896432420125396957}
   - component: {fileID: 896432420125396958}
   - component: {fileID: 896432420125396959}
+  - component: {fileID: 3471758239758435268}
   m_Layer: 5
   m_Name: Standard Button
   m_TagString: Untagged
@@ -351,3 +352,15 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &3471758239758435268
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 896432420125396953}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 02c040955ac212642a1948486e3f31d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

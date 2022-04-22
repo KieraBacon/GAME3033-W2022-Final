@@ -1,76 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4357222058714529891
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4345833514906479726}
-  - component: {fileID: 8337585495168618383}
-  - component: {fileID: 8097450898244838605}
-  m_Layer: 5
-  m_Name: Submenu Contents
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4345833514906479726
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4357222058714529891}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children:
-  - {fileID: 5069409353381444046}
-  m_Father: {fileID: 5069409353881947114}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!223 &8337585495168618383
-Canvas:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4357222058714529891}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_RenderMode: 2
-  m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
-  m_ReceivesEvents: 1
-  m_OverrideSorting: 0
-  m_OverridePixelPerfect: 0
-  m_SortingBucketNormalizedSize: 0
-  m_AdditionalShaderChannelsFlag: 0
-  m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_TargetDisplay: 0
---- !u!225 &8097450898244838605
-CanvasGroup:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4357222058714529891}
-  m_Enabled: 1
-  m_Alpha: 1
-  m_Interactable: 1
-  m_BlocksRaycasts: 1
-  m_IgnoreParentGroups: 0
 --- !u!1 &5069409353881947113
 GameObject:
   m_ObjectHideFlags: 0
@@ -80,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5069409353881947114}
-  - component: {fileID: 2245754008498004200}
+  - component: {fileID: 9167714931421935931}
   - component: {fileID: 1009031636463336610}
   m_Layer: 5
   m_Name: Standard Submenu
@@ -100,7 +29,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 4345833514906479726}
+  - {fileID: 5069409353381444046}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -109,7 +38,7 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!95 &2245754008498004200
+--- !u!95 &9167714931421935931
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -140,7 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 14cc3677a1bb7fa4e91b9d0cf7c8f703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2245754008498004200}
+  animator: {fileID: 9167714931421935931}
+  panel: {fileID: 5069409353381444046}
+  preferredHeight: 400
 --- !u!1001 &3879514542509112453
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -247,8 +178,16 @@ PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
-    m_TransformParent: {fileID: 4345833514906479726}
+    m_TransformParent: {fileID: 5069409353881947114}
     m_Modifications:
+    - target: {fileID: 3576267293312094991, guid: 81a34cc904d1fba4292dd7f9af266a65, type: 3}
+      propertyPath: m_Alpha
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3576267293312094991, guid: 81a34cc904d1fba4292dd7f9af266a65, type: 3}
+      propertyPath: m_BlocksRaycasts
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 9183234587795703445, guid: 81a34cc904d1fba4292dd7f9af266a65, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -336,6 +275,10 @@ PrefabInstance:
     - target: {fileID: 9183234587795703446, guid: 81a34cc904d1fba4292dd7f9af266a65, type: 3}
       propertyPath: m_Name
       value: Standard Panel
+      objectReference: {fileID: 0}
+    - target: {fileID: 9183234587795703446, guid: 81a34cc904d1fba4292dd7f9af266a65, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 81a34cc904d1fba4292dd7f9af266a65, type: 3}
