@@ -24,6 +24,12 @@ public class PlayerCharacter : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
+    public void StartGame()
+    {
+        transform.position = Vector3.zero;
+        transform.rotation = Quaternion.identity;
+    }
+
     private void FixedUpdate()
     {
         rigidbody.velocity = new Vector3(moveInput.x * speed, rigidbody.velocity.y, moveInput.y * speed);

@@ -6,7 +6,10 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(PlayerCharacter), typeof(PlayerInput))]
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private PlayerCharacter playerCharacter;
+    public static HashSet<PlayerController> allPlayerControllers = new HashSet<PlayerController>();
+
+    [SerializeField] private PlayerCharacter _playerCharacter;
+    public PlayerCharacter playerCharacter => _playerCharacter;
     [SerializeField] private Interactor interactor;
     private PlayerInput playerInput;
     private InputAction moveAction;
@@ -15,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private void Awake()
     {
-        playerCharacter = GetComponent<PlayerCharacter>();
+        _playerCharacter = GetComponent<PlayerCharacter>();
         playerInput = GetComponent<PlayerInput>();
         moveAction = playerInput.actions.FindAction("Move");
         interactAction = playerInput.actions.FindAction("Interact");
@@ -24,6 +27,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnEnable()
     {
+        allPlayerControllers.Add(this);
         moveAction.performed += OnMove;
         interactAction.performed += OnInteract;
         slowAction.performed += OnSlow;
@@ -32,6 +36,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnDisable()
     {
+        allPlayerControllers.Remove(this);
         moveAction.performed -= OnMove;
         interactAction.performed -= OnInteract;
         slowAction.performed -= OnSlow;
@@ -40,7 +45,7 @@ public class PlayerController : MonoBehaviour
 
     private void OnMove(InputAction.CallbackContext obj)
     {
-        playerCharacter.Move(obj.ReadValue<Vector2>());
+        _playerCharacter.Move(obj.ReadValue<Vector2>());
     }
 
     private void OnInteract(InputAction.CallbackContext obj)
@@ -50,6 +55,17 @@ public class PlayerController : MonoBehaviour
 
     private void OnSlow(InputAction.CallbackContext obj)
     {
-        playerCharacter.Slow(obj.performed);
+        _playerCharacter.Slow(obj.performed);
+    }
+
+    public void StartGame()
+    {
+        playerInput.SwitchCurrentActionMap("Player");
+        _playerCharacter.StartGame();
+    }
+
+    public void EndGame()
+    {
+        playerInput.SwitchCurrentActionMap("None");
     }
 }

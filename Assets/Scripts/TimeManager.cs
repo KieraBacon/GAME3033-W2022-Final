@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TimeManager : MonoBehaviour
+public class TimeManager
 {
     public delegate void TimeEffectEventHandler();
     public static event TimeEffectEventHandler onTimeAdjusted;
@@ -16,19 +16,14 @@ public class TimeManager : MonoBehaviour
     private static float _time;
     public static float time => _time;
 
-    private void Start()
-    {
-        _time = 0;
-    }
-
-    private void Update()
-    {
-        _time += Time.deltaTime;
-    }
-
     public static void AdjustTime(float delta)
     {
         _time += delta;
+    }
+
+    public static void ResetTime()
+    {
+        _time = 0;
     }
 
     public static void AdjustTimeScale(GameObject key, float value)
