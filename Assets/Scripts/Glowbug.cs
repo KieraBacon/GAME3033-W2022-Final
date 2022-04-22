@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Glowbug : MonoBehaviour
 {
-    //static Glowbug lastGlowbugToFlash;
+    static Glowbug lastGlowbugToFlashGlobally;
     static HashSet<Glowbug> allGlowbugs = new HashSet<Glowbug>();
 
     [Header("Component References")]
@@ -45,12 +45,16 @@ public class Glowbug : MonoBehaviour
     private Color lineEndColor => lineRendererStepsGradient.Evaluate((float)(connectionChainIndex + 1)/ lineRendererStepsToMax);
 
     [Header("Connection Properties")]
-    private Glowbug connectedGlowbug;
+    private Glowbug lastGlowbugInChain;
+    private Glowbug nextGlowbugInChain;
     private float connectedFlashTime = -1;
     private float connectionAngle = 0;
     private int connectionChainIndex = 0;
     [SerializeField, Min(0)]
     private int minChainedConnectionsToProgress = 2;
+    [SerializeField]
+    private bool useGlobalLastToFlash = false;
+    private float chainImpact => (1 / (float)(allGlowbugs.Count - 2)) * flashFrequency; // If all Glowbugs are in a chain, then time progresses by 1 second per second.
 
     private bool withinConnectionTime => connectedFlashTime > 0 && _lastFlashTime - connectedFlashTime < maxConnectionTime;
     private bool withinLineRendererTime => Time.time < _lastFlashTime + lineRendererDisplayTime;
@@ -121,49 +125,60 @@ public class Glowbug : MonoBehaviour
         _lastFlashTime = Time.time;
         animator.SetTrigger(FlashAnimationTriggerHash);
 
-        Glowbug lastGlowbugToFlash = GetLastGlowbugToFlashInRange();
+        Glowbug lastGlowbugToFlash_Internal = useGlobalLastToFlash ? lastGlowbugToFlashGlobally : GetLastGlowbugToFlashInRange();
 
         // If another Glowbug has flashed previously to this one
-        if (lastGlowbugToFlash)
+        if (lastGlowbugToFlash_Internal)
         {
-            float timeSinceLastFlash = _lastFlashTime - lastGlowbugToFlash._lastFlashTime; // The amount of time since the last flash
-            float connectedAngle = Vector3.SignedAngle(Vector3.forward, lastGlowbugToFlash.transform.position - transform.position, Vector3.up); // The signed angle, from Vector3.forward, between this Glowbug and the last one
+            float timeSinceLastFlash = _lastFlashTime - lastGlowbugToFlash_Internal._lastFlashTime; // The amount of time since the last flash
+            float connectedAngle = Vector3.SignedAngle(Vector3.forward, lastGlowbugToFlash_Internal.transform.position - transform.position, Vector3.up); // The signed angle, from Vector3.forward, between this Glowbug and the last one
             float angleDifference = 0; // The absolute difference in angle between this Glowbug's connection to the last one, and the last one's connection to the one before it
 
-            if (lastGlowbugToFlash.connectionChainIndex > 0) // If the last Glowbug was in a chain with at least one other - IE, it has a meaningful connectionAngle
+            if (lastGlowbugToFlash_Internal.connectionChainIndex > 0) // If the last Glowbug was in a chain with at least one other - IE, it has a meaningful connectionAngle
             {
-                angleDifference = Mathf.Abs(connectedAngle - lastGlowbugToFlash.connectionAngle);
+                angleDifference = Mathf.Abs(connectedAngle - lastGlowbugToFlash_Internal.connectionAngle);
             }
 
             if (angleDifference <= maxConnectionAngle && timeSinceLastFlash < maxConnectionTime) // There's a connection
             {
-                connectedGlowbug = lastGlowbugToFlash;
-                connectedFlashTime = lastGlowbugToFlash._lastFlashTime;
+                lastGlowbugInChain = lastGlowbugToFlash_Internal;
+                lastGlowbugInChain.nextGlowbugInChain = this;
+                connectedFlashTime = lastGlowbugToFlash_Internal._lastFlashTime;
                 connectionAngle = connectedAngle;
                 
-                connectionChainIndex = lastGlowbugToFlash.connectionChainIndex + 1;
+                connectionChainIndex = lastGlowbugToFlash_Internal.connectionChainIndex + 1;
 
-                float chainImpact = (1 / (allGlowbugs.Count - 2)) * flashFrequency; // If all Glowbugs are in a chain, then time progresses by 1 second per second.
                 if (connectionChainIndex > 1)
                     TimeManager.AdjustTime(chainImpact);
 
                 lineRenderer.SetPosition(0, transform.position);
-                lineRenderer.SetPosition(1, lastGlowbugToFlash.transform.position + Vector3.up * 0.1f);
+                lineRenderer.SetPosition(1, lastGlowbugToFlash_Internal.transform.position + Vector3.up * 0.1f);
                 lineRenderer.startColor = Color.clear;
                 lineRenderer.endColor = Color.clear;
                 lineRenderer.enabled = shouldShowLineRenderer;
             }
-            else // There's no connection
+            else // There's no incoming connection
             {
-                connectedGlowbug = null;
+                if (lastGlowbugInChain)
+                    lastGlowbugInChain.nextGlowbugInChain = null;
+
+                lastGlowbugInChain = null;
                 connectedFlashTime = -1;
                 connectionAngle = 0;
-                TimeManager.AdjustTime(-TimeManager.time);
+
+                float cumulativeImpact = 0;
+                foreach (Glowbug glowbug in allGlowbugs)
+                {
+                    if (glowbug != this && !glowbug.lastGlowbugInChain)
+                        cumulativeImpact += glowbug.chainImpact;
+                }
+                TimeManager.AdjustTime(Mathf.Max(-cumulativeImpact, -TimeManager.time));
+
                 connectionChainIndex = 0;
             }
         }
 
-        //lastGlowbugToFlash = this;
+        lastGlowbugToFlashGlobally = this;
 
         string text = "";
         foreach (Glowbug glowbug in FindObjectsOfType<Glowbug>())

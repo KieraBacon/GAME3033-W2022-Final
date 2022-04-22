@@ -132,6 +132,7 @@ MonoBehaviour:
     m_NumAlphaKeys: 2
   animationFlashDelayPercentage: 0.25
   minChainedConnectionsToProgress: 2
+  useGlobalLastToFlash: 1
 --- !u!120 &6355110045814711690
 LineRenderer:
   m_ObjectHideFlags: 0
