@@ -1,4 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
 public class Submenu : MonoBehaviour
 {
@@ -12,6 +16,8 @@ public class Submenu : MonoBehaviour
     private float preferredHeight = 400.0f;
     private bool _isOpen = false;
     public bool isOpen => _isOpen;
+    [SerializeField]
+    private Selectable initialSelection;
 
     private void OnValidate()
     {
@@ -20,25 +26,28 @@ public class Submenu : MonoBehaviour
 
     public void Close(bool immediate = false)
     {
-        if (!_isOpen) return;
+        if (!immediate && !_isOpen) return;
 
         _isOpen = false;
         if (immediate)
+        {
             panel.gameObject.SetActive(false);
+        }
         else
+        {
             animator.SetTrigger(AnimatorClosedHash);
+        }
     }
 
-    public void Open()
+
+    public void Open(Selectable overrideSelection = null)
     {
         if (_isOpen) return;
 
+        panel.gameObject.SetActive(true);
         animator.SetTrigger(AnimatorOpenHash);
+        if (initialSelection)
+            EventSystem.current.SetSelectedGameObject(overrideSelection ? overrideSelection.gameObject : initialSelection.gameObject);
         _isOpen = true;
     }
-
-    //private IEnumerator DoChangeHeight(float targetHeight)
-    //{
-    //    float currentHeight = 
-    //}
 }

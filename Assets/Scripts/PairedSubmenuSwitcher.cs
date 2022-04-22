@@ -10,6 +10,7 @@ public class PairedSubmenuSwitcher : SubmenuSwitcher
     {
         public Button button;
         public Submenu submenu;
+        public Selectable overrideSelection;
         [HideInInspector]
         public int SubmenuIndex;
     }
@@ -17,19 +18,21 @@ public class PairedSubmenuSwitcher : SubmenuSwitcher
     [SerializeField]
     private ButtonSubmenuPair[] buttonSubmenuPairs;
 
-    private void OnEnable()
+    protected override void OnEnable()
     {
+        base.OnEnable();
         foreach (ButtonSubmenuPair pair in buttonSubmenuPairs)
         {
-            pair.button.onClick.AddListener(() => SwitchSubmenu(GetSubmenuIndex(pair.submenu)));
+            pair.button.onClick.AddListener(() => SwitchSubmenu(GetSubmenuIndex(pair.submenu), pair.overrideSelection));
         }
     }
 
-    private void OnDisable()
+    protected override void OnDisable()
     {
+        base.OnDisable();
         foreach (ButtonSubmenuPair pair in buttonSubmenuPairs)
         {
-            pair.button.onClick.RemoveListener(() => SwitchSubmenu(GetSubmenuIndex(pair.submenu)));
+            pair.button.onClick.RemoveListener(() => SwitchSubmenu(GetSubmenuIndex(pair.submenu), pair.overrideSelection));
         }
     }
 }
