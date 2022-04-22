@@ -14,7 +14,6 @@ public class PlayerCharacter : MonoBehaviour
     private float rotationSpeed = 1;
 
     [Header("Interaction")]
-    private bool moveInputProvided = false;
     private Vector2 moveInput = Vector2.zero;
 
     [Header("Component References")]

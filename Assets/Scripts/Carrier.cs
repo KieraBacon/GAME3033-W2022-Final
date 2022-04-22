@@ -11,6 +11,7 @@ public class Carrier : MonoBehaviour
     private Transform carriedObjectParent;
     private Vector3 carryOffset;
     public bool isCarrying => carriedObject != null;
+
     private Interactor interactor;
 
     private void Awake()
@@ -43,6 +44,12 @@ public class Carrier : MonoBehaviour
 
     private void OnInteract(Interactor interactor, IInteractable interactable)
     {
+        if (carriedObject != null)
+        {
+            Drop();
+            return;
+        }
+
         Carryable carryable = interactable as Carryable;
         if (carryable)
         {
@@ -52,7 +59,10 @@ public class Carrier : MonoBehaviour
 
     private void PickUp(Carryable carryable)
     {
-        if (isCarrying)
+        if (carryable == null)
+            return;
+
+        if (carriedObject != null)
             Drop();
 
         carriedObject = carryable;
@@ -61,13 +71,20 @@ public class Carrier : MonoBehaviour
         carriedObject.transform.SetParent(carryAttachmentPoint);
         carryOffset = carriedObject.transform.position - carryAttachmentPoint.position;
         carriedObject.transform.localPosition = Vector3.zero;
+
+        interactor.SetPersistentInteraction(carriedObject);
     }
 
     private void Drop()
     {
+        if (carriedObject == null)
+            return;
+
         carriedObject.transform.SetParent(carriedObjectParent);
         carriedObject.transform.position += new Vector3(0, carryOffset.y, 0);
         carriedObject.Drop();
         carriedObject = null;
+        
+        interactor.SetPersistentInteraction(null);
     }
 }

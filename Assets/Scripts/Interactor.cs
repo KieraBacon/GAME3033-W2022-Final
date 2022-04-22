@@ -11,6 +11,8 @@ public class Interactor : MonoBehaviour
 
     [Header("Interaction")]
     private HashSet<IInteractable> interactablesInRange = new HashSet<IInteractable>();
+    private IInteractable currentInteractionTarget = null;
+    private IInteractable persistentInteraction = null;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -32,9 +34,18 @@ public class Interactor : MonoBehaviour
         }
     }
 
+    private void Update()
+    {
+        if (persistentInteraction == null)
+            SetCurrentInteractionTarget(GetNearestInteractable());
+    }
+
     public void Interact()
     {
-        if (onBeforeInteraction?.Invoke(this)! == true) return;
+        if (persistentInteraction != null)
+        {
+            if (onBeforeInteraction?.Invoke(this)! == true) return;
+        }
 
         IInteractable interactable = GetNearestInteractable();
         if (interactable != null && interactable.Interact())
@@ -45,6 +56,11 @@ public class Interactor : MonoBehaviour
 
     public IInteractable GetNearestInteractable()
     {
+        if (persistentInteraction != null)
+        {
+            return null;
+        }
+        
         IInteractable nearestInteractable = null;
         float nearestDistance = float.PositiveInfinity;
 
@@ -61,5 +77,32 @@ public class Interactor : MonoBehaviour
         }
 
         return nearestInteractable;
+    }
+
+    private void SetCurrentInteractionTarget(IInteractable interactable)
+    {
+        if (currentInteractionTarget != null)
+        {
+            if (interactable == currentInteractionTarget)
+                return;
+
+            currentInteractionTarget.SetHighlight(false);
+        }
+
+        currentInteractionTarget = interactable;
+        if (currentInteractionTarget != null)
+        {
+            currentInteractionTarget.SetHighlight(true);
+        }
+    }
+
+    public void SetPersistentInteraction(IInteractable interactable)
+    {
+        persistentInteraction = interactable;
+        
+        if (persistentInteraction != null)
+        {
+            SetCurrentInteractionTarget(null);
+        }
     }
 }
