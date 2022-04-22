@@ -179,13 +179,6 @@ public class Glowbug : MonoBehaviour
         }
 
         lastGlowbugToFlashGlobally = this;
-
-        string text = "";
-        foreach (Glowbug glowbug in FindObjectsOfType<Glowbug>())
-        {
-            text += " " + glowbug.name + ": " + glowbug.connectionChainIndex + "\n";
-        }
-        FindObjectOfType<TMPro.TextMeshProUGUI>().text = text;
     }
 
     private void OnTimeAdjusted()
