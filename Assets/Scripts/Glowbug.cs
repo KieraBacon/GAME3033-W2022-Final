@@ -32,6 +32,8 @@ public class Glowbug : MonoBehaviour
     private Color lineRendererColorMax;
     [SerializeField]
     private int lineRendererStepsToMax;
+    [SerializeField]
+    private float animationFlashDelayPercentage = 0.25f;
 
     [Header("Internal Flash Properties")]
     private float flashFrequency;
@@ -74,7 +76,10 @@ public class Glowbug : MonoBehaviour
             if (lineRendererDisplayTime > 0)
             {
                 float t = (Time.time - lastFlashTime) / lineRendererDisplayTime;
-                
+                t -= animationFlashDelayPercentage;
+                if (t < 0)
+                    t *= -1;
+
                 Color startColor = lineStartColor;
                 startColor.a = Mathf.Lerp(startColor.a, 0, t);
                 lineRenderer.startColor = startColor;
@@ -129,8 +134,10 @@ public class Glowbug : MonoBehaviour
                 chainIndex = lastGlowbugToFlash.chainIndex + 1;
                 lineRenderer.SetPosition(0, transform.position);
                 lineRenderer.SetPosition(1, lastGlowbugToFlash.transform.position + Vector3.up * 0.1f);
-                lineRenderer.startColor = Lerp(lineRendererColorMin, lineRendererColorMax, (float)chainIndex / lineRendererStepsToMax);
-                lineRenderer.endColor = Lerp(lineRendererColorMin, lineRendererColorMax, (float)(chainIndex + 1) / lineRendererStepsToMax);
+                lineRenderer.startColor = Color.clear;
+                lineRenderer.endColor = Color.clear;
+                //lineRenderer.startColor = Lerp(lineRendererColorMin, lineRendererColorMax, (float)chainIndex / lineRendererStepsToMax);
+                //lineRenderer.endColor = Lerp(lineRendererColorMin, lineRendererColorMax, (float)(chainIndex + 1) / lineRendererStepsToMax);
                 lineRenderer.enabled = shouldShowLineRenderer;
 
                 if (lastGlowbugToFlash.chainIndex == 0)
