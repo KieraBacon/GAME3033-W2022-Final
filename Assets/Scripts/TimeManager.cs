@@ -4,10 +4,14 @@ using UnityEngine;
 
 public class TimeManager : MonoBehaviour
 {
+    public delegate void TimeEffectEventHandler();
+    public static event TimeEffectEventHandler onTimeAdjusted;
+
     private static Dictionary<GameObject, float> timeEffects = new Dictionary<GameObject, float>();
 
     private static bool isPaused = false;
     public static bool Paused { get => isPaused; set { isPaused = value; SetTimeScale(); } }
+    public static float slowPercent => 1 - Time.timeScale;
 
     public static void AdjustTime(GameObject key, float value)
     {
@@ -35,5 +39,6 @@ public class TimeManager : MonoBehaviour
         Time.timeScale = adjusted;
 
         Debug.Log("Timescale: " + Time.timeScale);
+        onTimeAdjusted?.Invoke();
     }
 }
