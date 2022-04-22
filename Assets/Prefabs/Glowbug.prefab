@@ -74,12 +74,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lineRenderer: {fileID: 6355110045814711690}
-  lineRendererDisplayTime: 0.1
   animator: {fileID: 3661839720842552053}
-  flashFrequencyMin: 0.25
-  flashFrequencyVariance: 1.75
-  initialFlashDelayVariance: 10
-  maxConnectionTime: 0.2
+  flashFrequencyMin: 1
+  flashFrequencyVariance: 0
+  initialFlashDelayVariance: 5
+  maxConnectionAngle: 60
+  maxConnectionTime: 1
+  lineRendererDisplayTime: 0.25
+  lineRendererColorMin: {r: 0.49803922, g: 0, b: 0, a: 0.24705882}
+  lineRendererColorMax: {r: 1, g: 0.7490196, b: 0, a: 1}
+  lineRendererStepsToMax: 10
 --- !u!120 &6355110045814711690
 LineRenderer:
   m_ObjectHideFlags: 0
