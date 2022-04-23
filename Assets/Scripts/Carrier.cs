@@ -12,6 +12,12 @@ public class Carrier : MonoBehaviour
     private Vector3 carryOffset;
     public bool isCarrying => carriedObject != null;
 
+    [Header("Audio References")]
+    [SerializeField]
+    private AudioSource pickUpSound;
+    [SerializeField]
+    private AudioSource dropSound;
+
     private Interactor interactor;
 
     private void Awake()
@@ -78,6 +84,9 @@ public class Carrier : MonoBehaviour
         carriedObject.transform.localPosition = Vector3.zero;
 
         interactor.SetPersistentInteraction(carriedObject);
+
+        pickUpSound.pitch = Random.Range(0.95f, 1.05f);
+        pickUpSound.Play();
     }
 
     private void Drop()
@@ -100,5 +109,8 @@ public class Carrier : MonoBehaviour
         carriedObject = null;
 
         interactor.SetPersistentInteraction(null);
+
+        dropSound.pitch = Random.Range(0.95f, 1.05f);
+        dropSound.Play();
     }
 }

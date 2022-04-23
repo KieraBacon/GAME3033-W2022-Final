@@ -107,11 +107,10 @@ public class Submenu : MonoBehaviour
     {
         animator.SetTrigger(AnimatorClosedHash);
 
-        yield return null;
+        yield return new WaitForSeconds(0.1f);
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
 
-        panel.gameObject.SetActive(false);
         onSubmenuFinishedClosing?.Invoke(this);
 
         transitionCoroutine = null;
