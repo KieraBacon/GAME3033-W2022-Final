@@ -6,6 +6,7 @@ public class Glowbug : MonoBehaviour
 {
     static Glowbug lastGlowbugToFlashGlobally;
     static HashSet<Glowbug> allGlowbugs = new HashSet<Glowbug>();
+    public static int numUnchainedGlowbugs = 0;
 
     [Header("Component References")]
     [SerializeField]
@@ -167,12 +168,17 @@ public class Glowbug : MonoBehaviour
                 connectionAngle = 0;
 
                 float cumulativeImpact = 0;
+                numUnchainedGlowbugs = 0;
                 foreach (Glowbug glowbug in allGlowbugs)
                 {
-                    if (glowbug != this && !glowbug.lastGlowbugInChain)
-                        cumulativeImpact += glowbug.chainImpact;
+                    if (!glowbug.lastGlowbugInChain)
+                    {
+                        ++numUnchainedGlowbugs;
+                        if (glowbug != this)
+                            cumulativeImpact += glowbug.chainImpact;
+                    }
                 }
-                TimeManager.AdjustTime(Mathf.Max(-cumulativeImpact, -TimeManager.time));
+                TimeManager.AdjustTime(Mathf.Max(-cumulativeImpact * 0.9f, -TimeManager.time));
 
                 connectionChainIndex = 0;
             }

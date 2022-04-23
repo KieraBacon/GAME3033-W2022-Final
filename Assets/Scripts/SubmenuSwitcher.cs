@@ -59,12 +59,13 @@ public class SubmenuSwitcher : MonoBehaviour
     {
 
         submenus = new List<Submenu>();
-        foreach (Transform child in transform)
+        for (int i = 0; i < transform.childCount; i++)
         {
-            Submenu submenu = child.GetComponent<Submenu>();
+            Submenu submenu = transform.GetChild(i)?.GetComponent<Submenu>();
             submenu.switcher = this;
             submenus.Add(submenu);
-            submenu.Close(true);
+            if (i != index)
+                submenu.Close(true);
         }
     }
 

@@ -26,6 +26,9 @@ public class Submenu : MonoBehaviour
     public bool isOpen => _isOpen;
     [SerializeField]
     private Selectable initialSelection;
+    [SerializeField]
+    private bool slowInitialOpening = false;
+    private Coroutine transitionCoroutine = null;
 
     //private void Awake()
     //{
@@ -49,7 +52,13 @@ public class Submenu : MonoBehaviour
         }
         else
         {
-            animator.SetTrigger(AnimatorClosedHash);
+            if (transitionCoroutine != null)
+            {
+                StopCoroutine(transitionCoroutine);
+                transitionCoroutine = null;
+            }
+            transitionCoroutine = StartCoroutine(DoTransitioningOut());
+            //animator.SetTrigger(AnimatorClosedHash);
         }
     }
 
@@ -58,7 +67,14 @@ public class Submenu : MonoBehaviour
         if (_isOpen) return;
 
         panel.gameObject.SetActive(true);
-        animator.SetTrigger(AnimatorOpenHash);
+
+        if (transitionCoroutine != null)
+        {
+            StopCoroutine(transitionCoroutine);
+            transitionCoroutine = null;
+        }
+        transitionCoroutine = StartCoroutine(DoTransitioningIn());
+
         if (initialSelection)
             EventSystem.current.SetSelectedGameObject(overrideSelection ? overrideSelection.gameObject : initialSelection.gameObject);
 
@@ -66,21 +82,38 @@ public class Submenu : MonoBehaviour
         onSubmenuStartedOpening?.Invoke(this);
     }
 
-    private IEnumerator DoTransitioning(bool open)
+    private IEnumerator DoTransitioningIn()
     {
-        animator.SetTrigger(open ? AnimatorOpenHash : AnimatorClosedHash);
+        animator.SetTrigger(AnimatorOpenHash);
+
+        if (slowInitialOpening)
+            animator.speed = 0.25f;
+
         while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
             yield return null;
 
-        if (open)
-        {
             panel.gameObject.SetActive(true);
             onSubmenuFinishedOpening?.Invoke(this);
-        }
-        else
+
+        if (slowInitialOpening)
         {
-            panel.gameObject.SetActive(false);
-            onSubmenuFinishedClosing?.Invoke(this);
+            animator.speed = 1.0f;
+            slowInitialOpening = false;
         }
+        transitionCoroutine = null;
+    }
+
+    private IEnumerator DoTransitioningOut()
+    {
+        animator.SetTrigger(AnimatorClosedHash);
+
+        yield return null;
+        while (animator.GetCurrentAnimatorStateInfo(0).normalizedTime < 1)
+            yield return null;
+
+        panel.gameObject.SetActive(false);
+        onSubmenuFinishedClosing?.Invoke(this);
+
+        transitionCoroutine = null;
     }
 }

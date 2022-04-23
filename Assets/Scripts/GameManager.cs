@@ -29,6 +29,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private SubmenuSwitcher menuSwitcher;
+    [SerializeField]
+    private float timeToGameEnd = 10.0f;
+    [SerializeField]
+    private int numDesynchedGlowbugsAllowable = 1;
 
     private void Awake()
     {
@@ -47,7 +51,23 @@ public class GameManager : MonoBehaviour
     {
         TimeManager.shallowPaused = true;
         menuSwitcher.gameObject.SetActive(true);
-        menuSwitcher.SwitchSubmenu(0);
+        menuSwitcher.SwitchSubmenu((int)MenuIndices.MainSubmenu);
+    }
+
+    private void Update()
+    {
+        if (TimeManager.time >= timeToGameEnd)
+        {
+            GameManager gm = instance;
+            if (Glowbug.numUnchainedGlowbugs <= numDesynchedGlowbugsAllowable)
+            {
+                gm.menuSwitcher.SwitchSubmenu((int)MenuIndices.VictorySubmenu);
+            }
+            else
+            {
+                gm.menuSwitcher.SwitchSubmenu((int)MenuIndices.LossSubmenu);
+            }
+        }
     }
 
     public static void StartGame()
@@ -74,7 +94,7 @@ public class GameManager : MonoBehaviour
             playerController.allowInput = false;
         GameManager gm = instance;
         gm.menuSwitcher.gameObject.SetActive(true);
-        gm.menuSwitcher.SwitchSubmenu(4);
+        gm.menuSwitcher.SwitchSubmenu((int)MenuIndices.PauseSubmenu);
     }
 
     public static void ResumeGame()
@@ -83,6 +103,6 @@ public class GameManager : MonoBehaviour
         foreach (PlayerController playerController in PlayerController.allPlayerControllers)
             playerController.allowInput = true;
         GameManager gm = instance;
-        gm.menuSwitcher.Close();
+        gm.menuSwitcher.SwitchSubmenu((int)MenuIndices.InGameUI);
     }
 }

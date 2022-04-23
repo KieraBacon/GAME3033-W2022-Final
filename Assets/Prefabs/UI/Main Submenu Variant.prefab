@@ -153,6 +153,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Instructions
       objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -291,6 +295,10 @@ PrefabInstance:
       propertyPath: initialSelection
       value: 
       objectReference: {fileID: 8177622280651390930}
+    - target: {fileID: 1009031636463336610, guid: 1e2319c65dbb78e4bb27667fa18121df, type: 3}
+      propertyPath: slowInitialOpening
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5069409352698555293, guid: 1e2319c65dbb78e4bb27667fa18121df, type: 3}
       propertyPath: m_Name
       value: Title
@@ -434,6 +442,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Quit
       objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -567,6 +579,10 @@ PrefabInstance:
     - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_text
       value: Start Game
+      objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x
@@ -712,6 +728,10 @@ PrefabInstance:
     - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_text
       value: Credits
+      objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x
