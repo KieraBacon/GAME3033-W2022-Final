@@ -372,9 +372,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3184785139251486317}
     m_Modifications:
+    - target: {fileID: 905761899594048141, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 905761901031985321, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_Name
       value: Text Page (3)
+      objectReference: {fileID: 0}
+    - target: {fileID: 905761901031985321, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 905761901031985322, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_Pivot.x
@@ -460,6 +468,40 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_text
+      value: <color=white><b>Spacebar</b></color> picks up or drops a glowbug, while
+        <color=white><b>Shift</b></color> slows time so you can more easily see their
+        connections!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286611584
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261481155414316178, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553152920285782147, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01e7c42194732e34ca2927515901d401, type: 3}
 --- !u!224 &2973418463231635611 stripped
@@ -474,9 +516,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3184785139251486317}
     m_Modifications:
+    - target: {fileID: 905761899594048141, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 905761901031985321, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_Name
       value: Text Page (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 905761901031985321, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 905761901031985322, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_Pivot.x
@@ -564,7 +614,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_text
-      value: asdasd
+      value: Luckily, I know just what to do! See, the little glowbugs keep time
+        by <color=white><b>looking to each other</b></color>. Each time one flashes,
+        it pulls a little energy from the last one to flash, and passes it on to
+        the next one!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286611584
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261481155414316178, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553152920285782147, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01e7c42194732e34ca2927515901d401, type: 3}
@@ -667,6 +748,37 @@ PrefabInstance:
     - target: {fileID: 905761901031985322, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_text
+      value: Hey! So, there's a little oopsie going on here. Major tizzle - <color=white><b>nature's
+        little timekeepers</b></color> have managed to get themselves all confused!
+        Yup, it was definitely all them! Now the timeline's all messy and if we aren't
+        careful we'll be <color=white><b>forever stuck</b></color> in perpetual now!
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 7f493e346ad74ae41970a6cf19b51de8, type: 2}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286611584
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01e7c42194732e34ca2927515901d401, type: 3}
@@ -808,6 +920,10 @@ PrefabInstance:
       propertyPath: m_text
       value: Back
       objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -941,6 +1057,10 @@ PrefabInstance:
     - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_text
       value: Next
+      objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x
@@ -1107,9 +1227,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3184785139251486317}
     m_Modifications:
+    - target: {fileID: 905761899594048141, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 905761901031985321, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_Name
       value: Text Page (2)
+      objectReference: {fileID: 0}
+    - target: {fileID: 905761901031985321, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 905761901031985322, guid: 01e7c42194732e34ca2927515901d401, type: 3}
       propertyPath: m_Pivot.x
@@ -1195,6 +1323,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_text
+      value: So it's easy! You just have to line up all the <color=white><b>glowbugs
+        in order</b></color> of which ones are flashing first, and make sure they
+        can see each other! Err. <color=white><b>BEFORE 10 second pass</b></color>
+        and we've introduced inverse causality to the regular universe. That wouldn't
+        be great.
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.b
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.g
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor.r
+      value: 0.5019608
+      objectReference: {fileID: 0}
+    - target: {fileID: 2303476537268024342, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4286611584
+      objectReference: {fileID: 0}
+    - target: {fileID: 3261481155414316178, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8553152920285782147, guid: 01e7c42194732e34ca2927515901d401, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 01e7c42194732e34ca2927515901d401, type: 3}
 --- !u!224 &9042253321266073259 stripped
@@ -1212,6 +1376,10 @@ PrefabInstance:
     - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_text
       value: Previous
+      objectReference: {fileID: 0}
+    - target: {fileID: 896432419351037833, guid: 87ead628f6f5998478980077247a568a, type: 3}
+      propertyPath: m_fontColor32.rgba
+      value: 4294967295
       objectReference: {fileID: 0}
     - target: {fileID: 896432420125396952, guid: 87ead628f6f5998478980077247a568a, type: 3}
       propertyPath: m_Pivot.x

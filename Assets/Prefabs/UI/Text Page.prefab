@@ -146,9 +146,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 3887034725118239355}
+  switcher: {fileID: 0}
   panel: {fileID: 905761899594048142}
-  preferredHeight: 0
   initialSelection: {fileID: 0}
+  slowInitialOpening: 0
 --- !u!1 &8553152920285782147
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +228,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 905761899594048142}
     m_Modifications:
+    - target: {fileID: 2273978430795943125, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
+      propertyPath: m_fontSize
+      value: 36
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273978430795943125, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
+      propertyPath: m_fontStyle
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2273978430795943125, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 36
+      objectReference: {fileID: 0}
     - target: {fileID: 3258995576740080721, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
       propertyPath: m_Name
       value: Standard Text
@@ -261,11 +274,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7719995355421919608, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 7719995355421919608, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: -50
       objectReference: {fileID: 0}
     - target: {fileID: 7719995355421919608, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
       propertyPath: m_LocalPosition.x
@@ -301,7 +314,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7719995355421919608, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -25
       objectReference: {fileID: 0}
     - target: {fileID: 7719995355421919608, guid: bcd22b48edc43d4448f0b1df7e907c56, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
