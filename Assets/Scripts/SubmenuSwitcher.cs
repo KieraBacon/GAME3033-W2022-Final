@@ -71,16 +71,17 @@ public class SubmenuSwitcher : MonoBehaviour
 
     public void SwitchSubmenu(int index, Selectable overrideSelection = null)
     {
-        for (int i = 0; i < submenus.Count; i++)
-            if (i != this.index)
-                submenus[i].Close();
+        //for (int i = 0; i < submenus.Count; i++)
+        //    if (i != this.index && i != index)
+        //        submenus[i].Close();
 
         index = Mathf.Clamp(index, 0, submenus.Count - 1);
         if (this.index == index && submenus[this.index].isOpen) return;
 
-        if (this.index >= 0)
-            submenus[this.index].Close();
+        int oldIndex = this.index;
         this.index = index;
+        if (oldIndex >= 0)
+            submenus[oldIndex].Close();
         submenus[this.index].Open(overrideSelection);
 
         onSubmenuSwitched?.Invoke();

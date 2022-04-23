@@ -56,15 +56,21 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (TimeManager.time >= timeToGameEnd)
+        if (!TimeManager.Paused && !TimeManager.shallowPaused && TimeManager.time >= timeToGameEnd)
         {
             GameManager gm = instance;
             if (Glowbug.numUnchainedGlowbugs <= numDesynchedGlowbugsAllowable)
             {
+                foreach (PlayerController playerController in PlayerController.allPlayerControllers)
+                    playerController.EndGame();
+                TimeManager.shallowPaused = true;
                 gm.menuSwitcher.SwitchSubmenu((int)MenuIndices.VictorySubmenu);
             }
             else
             {
+                foreach (PlayerController playerController in PlayerController.allPlayerControllers)
+                    playerController.EndGame();
+                TimeManager.shallowPaused = true;
                 gm.menuSwitcher.SwitchSubmenu((int)MenuIndices.LossSubmenu);
             }
         }
@@ -72,6 +78,7 @@ public class GameManager : MonoBehaviour
 
     public static void StartGame()
     {
+        TimeManager.shallowPaused = false;
         TimeManager.ResetTime();
         foreach (GlowbugSpawner glowbugSpawner in GlowbugSpawner.allGlowbugSpawners)
             glowbugSpawner.SpawnAll();

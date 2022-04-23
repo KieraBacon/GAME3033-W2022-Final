@@ -44,15 +44,26 @@ public class SubmenuScaler : MonoBehaviour
 
     private void OnSubmenuStartedClosing(Submenu submenu)
     {
+        Debug.Log(this.gameObject.name + submenu.switcher.activeSubmenu.gameObject.name);
         Submenu openingSubmenu = submenu.switcher.activeSubmenu;
+        SubmenuScaler otherScaler = openingSubmenu.GetComponent<SubmenuScaler>();
         if (!openingSubmenu)
         {
             SetHeight(preferredHeight);
+            otherScaler?.SetHeight(preferredHeight);
         }
         else
         {
-            float targetHeight = openingSubmenu.GetComponent<SubmenuScaler>().preferredHeight;
-            SetHeight(targetHeight);
+            if (otherScaler)
+            {
+                float targetHeight = otherScaler.preferredHeight;
+                SetHeight(targetHeight);
+                otherScaler.SetHeight(targetHeight);
+            }
+            else
+            {
+                SetHeight(preferredHeight);
+            }
         }
     }
 
@@ -67,14 +78,17 @@ public class SubmenuScaler : MonoBehaviour
     {
         float initialTime = Time.time;
         float initialHeight = panel.sizeDelta.y;
-        float t = (Time.time - initialTime) / duration;
-
-        while (t < 1)
+        
+        bool complete = false;
+        while (!complete)
         {
+            float t = (Time.time - initialTime) / duration;
             panel.sizeDelta = new Vector2(panel.sizeDelta.x, Mathf.Lerp(initialHeight, targetHeight, t));
-            yield return null;
+            if (t >= 1)
+                complete = true;
+            else
+                yield return null;
         }
-        panel.sizeDelta = new Vector2(panel.sizeDelta.x, Mathf.Lerp(initialHeight, targetHeight, 1));
 
         scalingCoroutine = null;
     }
